@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nathan Anderson – Engineering Value Chain</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --border: #2a2a2a;
+    --red: #e8341a;
+    --red-dim: #c42a13;
+    --red-glow: rgba(232,52,26,0.15);
+    --text: #e8e8e8;
+    --text-dim: #888;
+    --mono: 'Share Tech Mono', monospace;
+    --cond: 'Barlow Condensed', sans-serif;
+    --body: 'Barlow', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 20px;
+  }
+  .header h1 {
+    font-family: var(--cond);
+    font-weight: 900;
+    font-size: clamp(24px, 4vw, 48px);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .header h1 span { color: var(--red); }
+  .header .subtitle {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .header .subtitle span { color: var(--red); }
+  .eq-bar {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: 0.1em;
+  }
+  .eq-bar span { color: var(--red); }
+  .main-grid {
+    display: grid;
+    grid-template-columns: 210px 1fr 210px;
+    gap: 0;
+    align-items: start;
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+  .col-head {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    text-align: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+  }
+  .io-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 3px;
+    padding: 11px 13px;
+    margin-bottom: 12px;
+  }
+  .io-block .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px; height: 18px;
+    background: var(--red);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: bold;
+    border-radius: 2px;
+    margin-bottom: 5px;
+  }
+  .io-block h4 {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 5px;
+  }
+  .io-block ul { list-style: none; }
+  .io-block ul li {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    padding-left: 10px;
+    position: relative;
+  }
+  .io-block ul li::before {
+    content: '▸';
+    color: var(--red);
+    position: absolute;
+    left: 0;
+    font-size: 8px;
+    top: 2px;
+  }
+  .flow-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--red-dim);
+    text-align: right;
+    margin-top: 4px;
+    letter-spacing: 0.08em;
+  }
+  .center-col {
+    padding: 0 20px;
+    position: relative;
+  }
+  .reactor-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 18px;
+  }
+  .reactor {
+    background: var(--bg3);
+    border: 2px solid var(--red);
+    border-radius: 6px 6px 14px 14px;
+    width: 155px;
+    padding: 16px 12px;
+    text-align: center;
+    box-shadow: 0 0 28px var(--red-glow), inset 0 0 16px rgba(232,52,26,0.04);
+    position: relative;
+  }
+  .reactor::before {
+    content: '';
+    position: absolute;
+    top: -11px; left: 50%;
+    transform: translateX(-50%);
+    width: 38px; height: 11px;
+    background: var(--bg3);
+    border: 2px solid var(--red);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+  }
+  .reactor::after {
+    content: '';
+    position: absolute;
+    bottom: -11px; left: 50%;
+    transform: translateX(-50%);
+    width: 22px; height: 11px;
+    background: var(--bg3);
+    border: 2px solid var(--red);
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+  }
+  .reactor h3 {
+    font-family: var(--cond);
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--red);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .reactor p {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .process-step {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 11px 14px;
+    margin-bottom: 8px;
+    transition: border-color 0.2s;
+  }
+  .process-step:hover { border-color: var(--red); }
+  .step-head { display: flex; align-items: center; gap: 9px; margin-bottom: 3px; }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--red);
+    background: var(--red-glow);
+    border: 1px solid var(--red-dim);
+    padding: 2px 5px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .process-step h4 {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .process-step p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    padding-left: 36px;
+  }
+  .step-arrow {
+    text-align: center;
+    color: var(--red);
+    font-size: 13px;
+    margin: 1px 0;
+  }
+  .feedback-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    text-align: center;
+    letter-spacing: 0.12em;
+    margin-top: 8px;
+    padding: 5px;
+    border: 1px dashed var(--red-dim);
+    border-radius: 3px;
+    background: var(--red-glow);
+  }
+  .bottom-grid {
+    max-width: 1060px;
+    margin: 24px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .why-box {
+    background: var(--bg2);
+    border: 1px solid var(--red);
+    border-radius: 3px;
+    padding: 16px 18px;
+    box-shadow: 0 0 18px var(--red-glow);
+  }
+  .why-box h4, .legend-box h4, .outputs-strip h4 {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .why-box h4 { color: var(--red); }
+  .why-item { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 8px; }
+  .why-icon { color: var(--red); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .why-item p { font-family: var(--mono); font-size: 10px; color: var(--text-dim); line-height: 1.5; }
+  .legend-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 16px 18px;
+  }
+  .legend-box h4 { color: var(--text-dim); }
+  .legend-items { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-line { width: 26px; height: 2px; flex-shrink: 0; }
+  .legend-line.solid { background: var(--text); }
+  .legend-line.dashed { background: none; border-top: 2px dashed var(--red-dim); }
+  .legend-line.red { background: var(--red); }
+  .legend-line.dotted { background: none; border-top: 2px dotted #555; }
+  .legend-item span { font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
+  .outputs-strip {
+    max-width: 1060px;
+    margin: 14px auto 0;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 16px 18px;
+    background: var(--bg2);
+  }
+  .outputs-strip h4 {
+    color: var(--text-dim);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+  .outputs-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .output-card {
+    text-align: center;
+    padding: 12px 8px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--bg3);
+    transition: border-color 0.2s;
+  }
+  .output-card:hover { border-color: var(--red-dim); }
+  .output-icon { font-size: 20px; margin-bottom: 6px; color: var(--red); }
+  .output-card p { font-family: var(--mono); font-size: 10px; color: var(--text-dim); line-height: 1.4; }
+  .input-col { padding-right: 6px; }
+  .output-col { padding-left: 6px; }
+  @media (max-width: 680px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .bottom-grid { grid-template-columns: 1fr; }
+    .outputs-row { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Nathan <span>Anderson</span> — Engineering Value Chain</h1>
+  <div class="subtitle">
+    <span>ChemE</span> &nbsp;|&nbsp; Advanced Manufacturing &nbsp;|&nbsp; Process Development &nbsp;|&nbsp; <span>Freeform Fit</span>
+  </div>
+</div>
+
+<div class="eq-bar">
+  <span>P</span> = pressure &nbsp;&nbsp; <span>T</span> = temperature &nbsp;&nbsp; <span>F</span> = flow &nbsp;&nbsp; <span>C</span> = concentration
+</div>
+
+<div class="main-grid">
+
+  <!-- LEFT -->
+  <div class="input-col">
+    <div class="col-head">Feedstocks / Inputs</div>
+
+    <div class="io-block">
+      <div class="num">1</div>
+      <h4>ChemE Foundation</h4>
+      <ul>
+        <li>transport phenomena</li>
+        <li>thermodynamics</li>
+        <li>materials + process thinking</li>
+      </ul>
+      <div class="flow-tag">F-01 ▶</div>
+    </div>
+
+    <div class="io-block">
+      <div class="num">2</div>
+      <h4>Research Experience</h4>
+      <ul>
+        <li>Georgia Tech Filler Lab</li>
+        <li>micromodular printed electronics</li>
+        <li>deposition physics</li>
+        <li>substrate effects</li>
+      </ul>
+      <div class="flow-tag">F-02 ▶</div>
+    </div>
+
+    <div class="io-block">
+      <div class="num">3</div>
+      <h4>Tools + Metrology</h4>
+      <ul>
+        <li>Keyence microscopy</li>
+        <li>image analysis</li>
+        <li>Python / MATLAB / JMP</li>
+        <li>experimental design</li>
+      </ul>
+      <div class="flow-tag">F-03 ▶</div>
+    </div>
+
+    <div class="io-block">
+      <div class="num">4</div>
+      <h4>Operating Traits</h4>
+      <ul>
+        <li>ownership</li>
+        <li>rapid troubleshooting</li>
+        <li>clear communication</li>
+        <li>grit + leadership</li>
+      </ul>
+      <div class="flow-tag">F-04 ▶</div>
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center-col">
+    <div class="col-head">Process Train</div>
+
+    <div class="reactor-wrap">
+      <div class="reactor">
+        <h3>Nathan Anderson</h3>
+        <p>Georgia Tech<br>Chemical &amp; Biomolecular<br>Engineering</p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-head"><span class="step-num">01</span><h4>Problem Framing</h4></div>
+      <p>Define goals · Map system · Identify variables</p>
+    </div>
+    <div class="step-arrow">↓</div>
+
+    <div class="process-step">
+      <div class="step-head"><span class="step-num">02</span><h4>Experiment Design</h4></div>
+      <p>DOE · Controls · Risk · Measurement plan</p>
+    </div>
+    <div class="step-arrow">↓</div>
+
+    <div class="process-step">
+      <div class="step-head"><span class="step-num">03</span><h4>Metrology + Data Collection</h4></div>
+      <p>Acquire · Calibrate · QC · Store</p>
+    </div>
+    <div class="step-arrow">↓</div>
+
+    <div class="process-step">
+      <div class="step-head"><span class="step-num">04</span><h4>Physics / Process-Window Analysis</h4></div>
+      <p>Model · Metrics · Statistics · Insight</p>
+    </div>
+    <div class="step-arrow">↓</div>
+
+    <div class="process-step">
+      <div class="step-head"><span class="step-num">05</span><h4>Iteration + Scale-Up Thinking</h4></div>
+      <p>Close gaps · De-risk · Scale · Standardize</p>
+    </div>
+
+    <div class="feedback-label">⟲ feedback / optimization</div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="output-col">
+    <div class="col-head">Products / Outputs</div>
+
+    <div class="io-block">
+      <div class="num">1</div>
+      <h4>Repeatability</h4>
+      <ul>
+        <li>Turns messy physical behavior into controllable process windows</li>
+      </ul>
+      <div class="flow-tag" style="text-align:left">◀ S-01</div>
+    </div>
+
+    <div class="io-block">
+      <div class="num">2</div>
+      <h4>Technical Credibility</h4>
+      <ul>
+        <li>Advanced manufacturing</li>
+        <li>materials science</li>
+        <li>process development</li>
+      </ul>
+      <div class="flow-tag" style="text-align:left">◀ S-03</div>
+    </div>
+
+    <div class="io-block">
+      <div class="num">3</div>
+      <h4>Scale-Up Readiness</h4>
+      <ul>
+        <li>Multi-physics experimentation</li>
+        <li>data-driven improvement</li>
+        <li>frontier manufacturing</li>
+      </ul>
+      <div class="flow-tag" style="text-align:left">◀ S-05</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom-grid">
+  <div class="why-box">
+    <h4>Why This Matters to Freeform</h4>
+    <div class="why-item">
+      <div class="why-icon">⬡</div>
+      <p>Complex physical systems — thermal, fluid, and material phenomena are core ChemE territory, directly mapping to metal AM challenges</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">↺</div>
+      <p>Metrology-driven iteration — trained to close the loop between measurement and process improvement, not just run experiments</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">▦</div>
+      <p>Advanced manufacturing at scale — experience bridging lab-scale deposition physics to scalable, data-verified production</p>
+    </div>
+  </div>
+
+  <div class="legend-box">
+    <h4>Legend</h4>
+    <div class="legend-items">
+      <div class="legend-item"><div class="legend-line solid"></div><span>material flow</span></div>
+      <div class="legend-item"><div class="legend-line dashed"></div><span>information flow</span></div>
+      <div class="legend-item"><div class="legend-line red"></div><span>control signal</span></div>
+      <div class="legend-item"><div class="legend-line dotted"></div><span>feedback loop</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="outputs-strip">
+  <h4>Representative Outputs</h4>
+  <div class="outputs-row">
+    <div class="output-card"><div class="output-icon">⊞</div><p>process maps</p></div>
+    <div class="output-card"><div class="output-icon">⊕</div><p>microscopy-based metrics</p></div>
+    <div class="output-card"><div class="output-icon">∿</div><p>statistical insight</p></div>
+    <div class="output-card"><div class="output-icon">≡</div><p>technical communication</p></div>
+  </div>
+</div>
+
+</body>
+</html>
