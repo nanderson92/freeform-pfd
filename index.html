@@ -1,909 +1,959 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Nathan Anderson process-development fit map for Freeform application supplement.">
-<title>Nathan Anderson – Freeform Process Development Fit</title>
+<title>Nathan Anderson – Freeform Process Development PFD</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #05080c;
-    --bg-radial: radial-gradient(circle at 20% 0%, rgba(48, 145, 255, 0.14), transparent 34%), radial-gradient(circle at 85% 12%, rgba(110, 255, 243, 0.10), transparent 32%), linear-gradient(135deg, #05080c 0%, #0b1118 52%, #07090d 100%);
-    --panel: rgba(13, 20, 29, 0.88);
-    --panel-strong: rgba(16, 27, 39, 0.96);
-    --panel-soft: rgba(21, 35, 50, 0.72);
-    --border: rgba(129, 170, 210, 0.22);
-    --border-strong: rgba(123, 229, 255, 0.46);
-    --cyan: #70eaff;
-    --cyan-dim: #35abc3;
-    --blue: #72a7ff;
-    --white: #f2f7ff;
-    --text: #dbe7f4;
-    --text-dim: #8ea1b6;
-    --text-faint: #617186;
-    --alert: #ff5b4a;
-    --alert-glow: rgba(255, 91, 74, 0.14);
-    --cyan-glow: rgba(112, 234, 255, 0.16);
-    --mono: 'Share Tech Mono', monospace;
-    --cond: 'Barlow Condensed', sans-serif;
-    --body: 'Barlow', sans-serif;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    min-height: 100vh;
-    background: var(--bg-radial);
-    color: var(--text);
-    font-family: var(--body);
-    padding: 34px 24px 42px;
-    line-height: 1.45;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(112, 234, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(112, 234, 255, 0.045) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.25));
-  }
-
-  .page {
-    width: min(1180px, 100%);
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .topline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-dim);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid var(--border-strong);
-    color: var(--cyan);
-    background: rgba(112, 234, 255, 0.055);
-    padding: 8px 11px;
-    border-radius: 999px;
-    box-shadow: 0 0 22px var(--cyan-glow);
-    white-space: nowrap;
-  }
-
-  .status {
-    color: var(--text-faint);
-    text-align: right;
-  }
-
-  .hero {
-    border: 1px solid var(--border-strong);
-    background: linear-gradient(135deg, rgba(13,20,29,0.96), rgba(7,10,15,0.88));
-    border-radius: 20px;
-    padding: 30px 32px 26px;
-    box-shadow: 0 20px 65px rgba(0,0,0,0.34), inset 0 0 34px rgba(112,234,255,0.035);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    width: 380px;
-    height: 380px;
-    right: -140px;
-    top: -170px;
-    background: radial-gradient(circle, rgba(112,234,255,0.18), transparent 65%);
-    pointer-events: none;
-  }
-
-  h1 {
-    font-family: var(--cond);
-    font-size: clamp(34px, 6vw, 68px);
-    line-height: 0.92;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--white);
-    max-width: 970px;
-  }
-
-  h1 span { color: var(--cyan); }
-
-  .subtitle {
-    margin-top: 18px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .chip {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.07em;
-    color: var(--text-dim);
-    border: 1px solid var(--border);
-    background: rgba(18, 32, 45, 0.58);
-    border-radius: 999px;
-    padding: 7px 10px;
-    text-transform: uppercase;
-  }
-
-  .chip.accent {
-    color: var(--cyan);
-    border-color: var(--border-strong);
-    background: rgba(112, 234, 255, 0.065);
-  }
-
-  .hero-copy {
-    margin-top: 18px;
-    max-width: 920px;
-    color: var(--text);
-    font-size: 18px;
-    line-height: 1.58;
-  }
-
-  .hero-copy strong { color: var(--white); font-weight: 700; }
-
-  .fit-bar {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1.3fr repeat(4, minmax(120px, 1fr));
-    gap: 10px;
-  }
-
-  .fit-thesis, .fit-card {
-    border: 1px solid var(--border);
-    background: rgba(8, 13, 20, 0.62);
-    border-radius: 14px;
-    padding: 14px 15px;
-  }
-
-  .fit-thesis {
-    border-color: var(--border-strong);
-    background: rgba(112, 234, 255, 0.055);
-  }
-
-  .eyebrow {
-    font-family: var(--mono);
-    color: var(--cyan);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .fit-thesis p, .fit-card p {
-    font-size: 14px;
-    color: var(--text-dim);
-  }
-
-  .fit-card h3 {
-    font-family: var(--cond);
-    color: var(--white);
-    font-size: 18px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .variables {
-    margin: 20px 0 24px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: rgba(8, 13, 20, 0.52);
-    padding: 12px 16px;
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
-    font-family: var(--mono);
-    color: var(--text-dim);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .variables span { color: var(--cyan); }
-  .variables .alert { color: var(--alert); }
-
-  .main-grid {
-    display: grid;
-    grid-template-columns: 260px minmax(340px, 1fr) 260px;
-    gap: 18px;
-    align-items: start;
-  }
-
-  .column, .center-col {
-    border: 1px solid var(--border);
-    background: var(--panel);
-    border-radius: 18px;
-    padding: 18px;
-    box-shadow: 0 16px 46px rgba(0, 0, 0, 0.22);
-  }
-
-  .col-head {
-    font-family: var(--cond);
-    font-weight: 800;
-    font-size: 16px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .col-head small {
-    font-family: var(--mono);
-    color: var(--text-faint);
-    font-size: 10px;
-    letter-spacing: 0.08em;
-  }
-
-  .io-block, .process-step, .output-card, .why-box, .legend-box, .submission-box {
-    border: 1px solid var(--border);
-    background: var(--panel-soft);
-    border-radius: 14px;
-  }
-
-  .io-block {
-    padding: 14px;
-    margin-bottom: 12px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .io-block::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--cyan), rgba(112,234,255,0.18));
-  }
-
-  .io-block .num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 8px;
-    background: rgba(112, 234, 255, 0.12);
-    border: 1px solid var(--border-strong);
-    color: var(--cyan);
-    font-family: var(--mono);
-    font-size: 12px;
-    margin-bottom: 9px;
-  }
-
-  .io-block h4 {
-    font-family: var(--cond);
-    font-weight: 800;
-    font-size: 20px;
-    line-height: 1;
-    color: var(--white);
-    margin-bottom: 8px;
-    letter-spacing: 0.02em;
-  }
-
-  .io-block ul { list-style: none; }
-
-  .io-block li {
-    font-size: 14px;
-    color: var(--text-dim);
-    line-height: 1.45;
-    padding-left: 14px;
-    position: relative;
-    margin: 4px 0;
-  }
-
-  .io-block li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    top: -1px;
-    color: var(--cyan);
-    font-size: 17px;
-  }
-
-  .flow-tag {
-    margin-top: 9px;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-faint);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .center-col {
-    padding: 18px 20px 20px;
-  }
-
-  .reactor-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 6px 0 18px;
-  }
-
-  .reactor {
-    width: min(100%, 390px);
-    background: linear-gradient(180deg, rgba(17,30,44,0.92), rgba(9,15,23,0.96));
-    border: 1px solid var(--border-strong);
-    border-radius: 18px;
-    padding: 18px 20px;
-    text-align: center;
-    box-shadow: 0 0 35px var(--cyan-glow), inset 0 0 20px rgba(112, 234, 255, 0.04);
-    position: relative;
-  }
-
-  .reactor::before, .reactor::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 72px;
-    height: 10px;
-    border: 1px solid var(--border-strong);
-    background: #0b121b;
-  }
-
-  .reactor::before { top: -11px; border-bottom: none; border-radius: 8px 8px 0 0; }
-  .reactor::after { bottom: -11px; border-top: none; border-radius: 0 0 8px 8px; width: 46px; }
-
-  .reactor h3 {
-    font-family: var(--cond);
-    font-weight: 900;
-    font-size: 28px;
-    color: var(--white);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .reactor p {
-    color: var(--text-dim);
-    font-size: 15px;
-    margin-top: 6px;
-  }
-
-  .process-step {
-    padding: 15px 16px;
-    margin-bottom: 10px;
-    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-  }
-
-  .process-step:hover {
-    transform: translateY(-1px);
-    border-color: var(--border-strong);
-    background: rgba(25, 43, 60, 0.76);
-  }
-
-  .step-head {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    margin-bottom: 7px;
-  }
-
-  .step-num {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 28px;
-    border-radius: 8px;
-    background: rgba(112, 234, 255, 0.12);
-    border: 1px solid var(--border-strong);
-    color: var(--cyan);
-    font-family: var(--mono);
-    font-size: 12px;
-  }
-
-  .process-step h4 {
-    font-family: var(--cond);
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--white);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-
-  .process-step p {
-    font-size: 15px;
-    color: var(--text-dim);
-    padding-left: 45px;
-  }
-
-  .step-arrow {
-    text-align: center;
-    color: var(--cyan-dim);
-    font-family: var(--mono);
-    font-size: 16px;
-    margin: -3px 0 5px;
-  }
-
-  .feedback-label {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--cyan);
-    text-align: center;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-top: 12px;
-    padding: 10px;
-    border: 1px dashed var(--border-strong);
-    border-radius: 12px;
-    background: rgba(112, 234, 255, 0.055);
-  }
-
-  .right .io-block::before {
-    background: linear-gradient(to bottom, var(--blue), rgba(114, 167, 255, 0.18));
-  }
-
-  .right .io-block .num {
-    color: var(--blue);
-    border-color: rgba(114, 167, 255, 0.45);
-    background: rgba(114, 167, 255, 0.11);
-  }
-
-  .right .io-block li::before { color: var(--blue); }
-
-  .bottom-grid {
-    display: grid;
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: 18px;
-    margin-top: 18px;
-  }
-
-  .why-box, .legend-box, .submission-box {
-    padding: 19px;
-    background: var(--panel);
-  }
-
-  .why-box {
-    border-color: var(--border-strong);
-    box-shadow: 0 0 32px var(--cyan-glow);
-  }
-
-  .section-title {
-    font-family: var(--cond);
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 12px;
-  }
-
-  .why-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .why-item {
-    border: 1px solid var(--border);
-    background: rgba(9, 15, 23, 0.62);
-    border-radius: 12px;
-    padding: 13px;
-  }
-
-  .why-icon {
-    color: var(--cyan);
-    font-family: var(--mono);
-    font-size: 17px;
-    margin-bottom: 8px;
-  }
-
-  .why-item h4 {
-    color: var(--white);
-    font-family: var(--cond);
-    font-size: 18px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .why-item p {
-    color: var(--text-dim);
-    font-size: 14px;
-    line-height: 1.45;
-  }
-
-  .legend-items {
-    display: grid;
-    gap: 10px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--text-dim);
-    font-family: var(--mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-  }
-
-  .legend-line { width: 32px; height: 2px; flex-shrink: 0; }
-  .legend-line.solid { background: var(--text); }
-  .legend-line.dashed { background: none; border-top: 2px dashed var(--cyan); }
-  .legend-line.cyan { background: var(--cyan); box-shadow: 0 0 10px var(--cyan-glow); }
-  .legend-line.alert { background: var(--alert); box-shadow: 0 0 10px var(--alert-glow); }
-
-  .outputs-strip {
-    margin-top: 18px;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 18px;
-    background: var(--panel);
-  }
-
-  .outputs-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-
-  .output-card {
-    padding: 15px;
-    min-height: 120px;
-  }
-
-  .output-card .output-icon {
-    color: var(--cyan);
-    font-family: var(--mono);
-    font-size: 24px;
-    margin-bottom: 8px;
-  }
-
-  .output-card h4 {
-    color: var(--white);
-    font-family: var(--cond);
-    font-size: 19px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: 6px;
-  }
-
-  .output-card p {
-    color: var(--text-dim);
-    font-size: 14px;
-  }
-
-  .submission-box {
-    margin-top: 18px;
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 16px;
-    align-items: center;
-    border-color: rgba(255, 91, 74, 0.38);
-    background: linear-gradient(135deg, rgba(255,91,74,0.07), rgba(13,20,29,0.9));
-  }
-
-  .submission-box h3 {
-    font-family: var(--cond);
-    font-size: 24px;
-    text-transform: uppercase;
-    color: var(--white);
-  }
-
-  .submission-box p {
-    color: var(--text-dim);
-    font-size: 15px;
-  }
-
-  .submission-box strong { color: var(--white); }
-
-  @media (max-width: 980px) {
-    .fit-bar { grid-template-columns: 1fr 1fr; }
-    .fit-thesis { grid-column: 1 / -1; }
-    .main-grid { grid-template-columns: 1fr; }
-    .column, .center-col { padding: 16px; }
-    .why-grid, .outputs-row { grid-template-columns: 1fr 1fr; }
-    .bottom-grid { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 620px) {
-    body { padding: 20px 14px 32px; }
-    .topline { flex-direction: column; align-items: flex-start; }
-    .status { text-align: left; }
-    .hero { padding: 23px 18px 20px; border-radius: 16px; }
-    h1 { font-size: clamp(31px, 13vw, 46px); }
-    .hero-copy { font-size: 16px; }
-    .fit-bar, .why-grid, .outputs-row, .submission-box { grid-template-columns: 1fr; }
-    .variables { justify-content: flex-start; }
-    .process-step p { padding-left: 0; }
-    .step-head { align-items: flex-start; }
-  }
-
-  @media print {
-    body { background: #ffffff; color: #111827; padding: 20px; }
-    body::before { display: none; }
-    .hero, .column, .center-col, .why-box, .legend-box, .outputs-strip, .submission-box {
-      background: #ffffff;
-      box-shadow: none;
-      border-color: #9ca3af;
-    }
-    h1, .reactor h3, .io-block h4, .process-step h4, .output-card h4, .submission-box h3 { color: #111827; }
-    .hero-copy, .io-block li, .process-step p, .why-item p, .output-card p, .submission-box p, .fit-card p, .fit-thesis p { color: #374151; }
-    .badge, .chip, .col-head, .section-title, .eyebrow, .variables span { color: #0369a1; }
-  }
+/* ─── CHROME-FUTURISTIC PALETTE ──────────────────────────── */
+:root {
+  --bg:        #080a0d;
+  /* Chrome / steel metal spectrum */
+  --ch-hi:     #dde8ef;   /* brightest chrome */
+  --ch-mid:    #94afc0;   /* mid chrome */
+  --ch-lo:     #4a6070;   /* shadow chrome */
+  /* Steel-blue — process flow lines */
+  --st:        #4b87a8;
+  --st-hi:     #6aa6c4;
+  --st-glow:   rgba(75,135,168,.20);
+  /* Orange — feedback / recycle loops */
+  --or:        #c46818;
+  --or-hi:     #de7e30;
+  --or-glow:   rgba(196,104,24,.18);
+  /* Panels */
+  --pan:       #0c1219;
+  --pan-hi:    #131d28;
+  --pan-rim:   #1c2c3c;
+  /* Borders */
+  --bdr:       rgba(130,170,200,.18);
+  --bdr-hi:    rgba(185,215,232,.40);
+  /* Text */
+  --tx:        #b8cdd8;
+  --tx-mid:    #6888a0;
+  --tx-dim:    #385060;
+  /* Type */
+  --mono: 'Share Tech Mono', monospace;
+  --cond: 'Barlow Condensed', sans-serif;
+  --sans: 'Barlow', sans-serif;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 55% 38% at 18% -8%, rgba(75,135,168,.07), transparent),
+    radial-gradient(ellipse 40% 28% at 88% 12%, rgba(75,135,168,.05), transparent),
+    radial-gradient(ellipse 30% 30% at 50% 90%, rgba(196,104,24,.04), transparent);
+  color: var(--tx);
+  font-family: var(--sans);
+  padding: 28px 20px 52px;
+  min-height: 100vh;
+  line-height: 1.45;
+}
+
+/* Subtle engineering grid */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(140,175,200,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140,175,200,.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.page { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+
+/* ─── TOPBAR ─────────────────────────────────────────────── */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; margin-bottom: 18px;
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--tx-dim);
+}
+
+.topbar-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--bdr-hi); border-radius: 3px;
+  color: var(--ch-mid); background: rgba(185,215,232,.05);
+  padding: 6px 11px;
+}
+.topbar-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--st-hi);
+  box-shadow: 0 0 6px var(--st);
+}
+
+/* ─── HERO ───────────────────────────────────────────────── */
+.hero {
+  border: 1px solid var(--bdr-hi);
+  border-radius: 8px;
+  background: linear-gradient(160deg, #0f1b28 0%, #0a1320 55%, #07090e 100%);
+  padding: 26px 28px 22px;
+  margin-bottom: 16px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.4);
+}
+
+/* Precision top-rail highlight — the chrome edge */
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(185,215,232,.3) 15%,
+    rgba(220,238,248,.75) 50%,
+    rgba(185,215,232,.3) 85%, transparent 100%);
+}
+
+/* Scan lines — subtle machined-surface texture */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px, rgba(255,255,255,.003) 4px);
+}
+
+.hero-name {
+  font-family: var(--cond);
+  font-size: clamp(38px, 5.5vw, 62px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  line-height: .92;
+  /* Chrome metallic gradient text */
+  background: linear-gradient(175deg, #eef4f8 0%, #b4cad8 38%, #6890aa 80%, #3a5868 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 4px;
+}
+
+.hero-role {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: .13em; text-transform: uppercase;
+  color: var(--st-hi); margin-bottom: 16px;
+}
+
+.hero-thesis {
+  max-width: 860px; font-size: 16.5px; line-height: 1.62;
+  color: var(--tx); margin-bottom: 20px;
+  border-left: 2px solid var(--st); padding-left: 15px;
+}
+.hero-thesis strong { color: var(--ch-hi); }
+
+.pillars {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px;
+}
+
+.pillar {
+  border: 1px solid var(--bdr);
+  background: rgba(10,16,24,.75);
+  border-radius: 5px; padding: 11px 13px;
+  position: relative; overflow: hidden;
+}
+.pillar::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--st), rgba(75,135,168,.3));
+}
+.pillar-head {
+  font-family: var(--cond);
+  font-size: 19px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .05em;
+  color: var(--ch-hi); margin-bottom: 3px;
+}
+.pillar p { font-size: 12.5px; color: var(--tx-mid); }
+
+/* ─── VARIABLE STRIP ─────────────────────────────────────── */
+.var-strip {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  border: 1px solid var(--bdr); border-radius: 5px;
+  background: rgba(8,14,22,.85); padding: 9px 14px;
+  margin-bottom: 18px;
+  font-family: var(--mono); font-size: 10.5px;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.var-strip-lbl { color: var(--tx-dim); margin-right: 6px; white-space: nowrap; }
+.vtag {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: 1px solid var(--bdr); border-radius: 3px;
+  background: rgba(75,135,168,.09); padding: 3px 8px;
+  color: var(--tx-mid); white-space: nowrap;
+}
+.vtag .s { color: var(--st-hi); font-size: 12px; }
+.vtag.fb { background: rgba(196,104,24,.09); border-color: rgba(196,104,24,.3); }
+.vtag.fb .s { color: var(--or-hi); }
+
+/* ─── FLOW HEADER (top connector bar) ───────────────────── */
+.flow-header {
+  display: grid;
+  grid-template-columns: 240px 1fr 1fr 1fr 240px;
+  align-items: center;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.fh-label {
+  font-family: var(--mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--st-hi);
+  text-align: center;
+  padding: 6px 0;
+  border: 1px solid var(--bdr);
+  border-radius: 4px 4px 0 0;
+  background: rgba(75,135,168,.08);
+  border-bottom: none;
+}
+
+.fh-pipe {
+  display: flex; align-items: center;
+  height: 34px; position: relative;
+}
+
+.fh-pipe .pipe-line {
+  flex: 1; height: 2px;
+  background: linear-gradient(90deg, var(--st), var(--st-hi));
+}
+
+.fh-pipe .pipe-arrow {
+  width: 0; height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 10px solid var(--st-hi);
+}
+
+.fh-pipe .stream-badge {
+  position: absolute; top: -18px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono); font-size: 9px;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--st); white-space: nowrap;
+  background: var(--bg); padding: 0 4px;
+}
+
+/* ─── MAIN PFD LAYOUT ────────────────────────────────────── */
+.pfd-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+  gap: 0;
+  align-items: start;
+  border: 1px solid var(--bdr);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+/* ─── COLUMN PANELS ──────────────────────────────────────── */
+.col-panel {
+  background: var(--pan);
+  border-right: 1px solid var(--bdr);
+}
+
+.col-panel:last-child { border-right: none; border-left: 1px solid var(--bdr); }
+
+.col-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 11px 15px;
+  background: linear-gradient(90deg, #0e1a26, #131f2e, #0e1a26);
+  border-bottom: 1px solid var(--bdr-hi);
+  position: relative;
+}
+.col-head::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--st-hi), transparent);
+}
+.col-head-title {
+  font-family: var(--cond); font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .2em; color: var(--ch-mid);
+}
+.col-head-sub {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--tx-dim);
+}
+
+.col-body { padding: 13px; }
+
+/* ─── IO BLOCKS (F and S items) ──────────────────────────── */
+.io-block {
+  border: 1px solid var(--bdr);
+  background: rgba(10,16,24,.8);
+  border-radius: 5px;
+  padding: 12px 12px 12px 0;
+  margin-bottom: 10px;
+  display: flex; overflow: hidden;
+  position: relative;
+}
+
+/* Left accent pipe */
+.io-block::before {
+  content: '';
+  flex-shrink: 0; width: 3px;
+  background: linear-gradient(to bottom, var(--st-hi), var(--st), rgba(75,135,168,.15));
+  margin-right: 11px; border-radius: 2px 0 0 2px;
+  align-self: stretch;
+}
+
+.outputs-col .io-block::before {
+  background: linear-gradient(to bottom, var(--ch-hi), var(--ch-mid), rgba(148,175,192,.1));
+}
+
+.io-inner { flex: 1; min-width: 0; }
+
+.io-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 23px; height: 20px; border-radius: 3px;
+  background: rgba(75,135,168,.14); border: 1px solid rgba(75,135,168,.38);
+  color: var(--st-hi); font-family: var(--mono); font-size: 10px;
+  margin-bottom: 6px;
+}
+.outputs-col .io-num {
+  background: rgba(148,175,192,.1); border-color: rgba(185,215,232,.3);
+  color: var(--ch-mid);
+}
+
+.io-title {
+  font-family: var(--cond); font-size: 17px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .02em;
+  color: var(--ch-hi); line-height: 1.1; margin-bottom: 7px;
+}
+
+.io-list { list-style: none; }
+.io-li {
+  font-size: 12.5px; color: var(--tx-mid);
+  padding-left: 12px; position: relative;
+  margin: 3px 0; line-height: 1.4;
+}
+.io-li::before {
+  content: '–'; position: absolute; left: 0;
+  color: var(--st); font-family: var(--mono);
+}
+.outputs-col .io-li::before { color: var(--ch-lo); }
+
+.io-tag {
+  margin-top: 8px; font-family: var(--mono);
+  font-size: 9.5px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--tx-dim); display: flex; align-items: center; gap: 4px;
+}
+.io-tag::before {
+  content: ''; width: 12px; height: 1px;
+  background: var(--st); opacity: .55;
+}
+.outputs-col .io-tag { flex-direction: row-reverse; }
+.outputs-col .io-tag::before { background: var(--ch-lo); }
+
+/* ─── CENTER PROCESS PANEL ───────────────────────────────── */
+.process-panel {
+  background: var(--pan);
+  position: relative;
+}
+
+.process-panel::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--st-hi), var(--ch-hi), var(--st-hi), transparent);
+  z-index: 1;
+}
+
+.reactor-block {
+  padding: 18px 20px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--bdr);
+  background: linear-gradient(180deg, #111e2e, #0a1420);
+}
+
+.nameplate {
+  display: inline-block;
+  border: 1px solid var(--bdr-hi); border-radius: 5px;
+  padding: 13px 22px;
+  background: linear-gradient(145deg, #0f1e2c, #07101c);
+  box-shadow: inset 0 1px 0 rgba(185,215,232,.1), 0 4px 24px rgba(0,0,0,.4);
+  position: relative;
+}
+/* Nameplate rivet marks */
+.nameplate::before, .nameplate::after {
+  position: absolute; color: var(--ch-lo); font-size: 7px; opacity: .5;
+}
+.nameplate::before { content: '●'; top: 7px; left: 8px; }
+.nameplate::after  { content: '●'; top: 7px; right: 8px; }
+
+.nameplate-name {
+  font-family: var(--cond); font-size: 24px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: .06em;
+  background: linear-gradient(175deg, #ecf4f8 0%, #aac4d4 45%, #6090a8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 3px;
+}
+.nameplate-sub {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--tx-mid);
+}
+
+.steps-body { padding: 14px 16px 18px; }
+
+/* ─── PROCESS STEPS ──────────────────────────────────────── */
+.process-step {
+  border: 1px solid var(--bdr);
+  background: rgba(9,15,22,.85);
+  border-radius: 5px; padding: 12px 14px;
+  position: relative; overflow: hidden;
+  transition: border-color .15s, background .15s;
+}
+.process-step:hover {
+  border-color: rgba(75,135,168,.42);
+  background: rgba(13,22,33,.95);
+}
+
+/* Left accent rail on steps */
+.process-step::before {
+  content: '';
+  position: absolute; left: 0; top: 5px; bottom: 5px; width: 3px;
+  background: linear-gradient(to bottom, var(--st-hi), var(--st));
+  border-radius: 2px;
+}
+
+.step-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 22px; border-radius: 3px; flex-shrink: 0;
+  background: rgba(75,135,168,.16); border: 1px solid rgba(75,135,168,.42);
+  color: var(--st-hi); font-family: var(--mono); font-size: 11px;
+}
+.step-title {
+  font-family: var(--cond); font-size: 18px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .03em; color: var(--ch-hi);
+}
+.step-desc {
+  font-size: 13px; color: var(--tx-mid);
+  padding-left: 44px; line-height: 1.5;
+}
+
+/* ─── FLOW ARROWS BETWEEN STEPS ─────────────────────────── */
+.flow-arrow {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 3px 0; gap: 0;
+}
+.flow-arrow .fa-line {
+  width: 2px; height: 18px;
+  background: linear-gradient(to bottom, var(--st), var(--st-hi));
+}
+.flow-arrow .fa-label {
+  font-family: var(--mono); font-size: 8.5px;
+  color: var(--st); letter-spacing: .08em;
+  text-transform: uppercase; padding: 2px 6px;
+  border: 1px solid rgba(75,135,168,.25); border-radius: 2px;
+  background: rgba(75,135,168,.07);
+  white-space: nowrap; margin: 2px 0;
+}
+.flow-arrow .fa-head {
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid var(--st-hi);
+}
+
+/* ─── FEEDBACK LOOP ──────────────────────────────────────── */
+.feedback-loop {
+  margin-top: 14px;
+  border: 1px dashed rgba(196,104,24,.45);
+  border-radius: 5px;
+  background: rgba(196,104,24,.05);
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  position: relative;
+}
+/* orange top edge */
+.feedback-loop::before {
+  content: '';
+  position: absolute; top: 0; left: 12px; right: 12px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--or), transparent);
+}
+.fb-icon {
+  color: var(--or-hi); font-size: 20px; flex-shrink: 0;
+  line-height: 1; font-family: var(--mono);
+}
+.fb-text {
+  font-family: var(--mono); font-size: 10.5px;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--or-hi);
+}
+.fb-text .sep { color: rgba(196,104,24,.45); margin: 0 5px; }
+
+/* ─── BOTTOM SECTIONS ────────────────────────────────────── */
+.bottom-row {
+  display: grid; grid-template-columns: 1fr 240px; gap: 14px;
+  margin-top: 16px;
+}
+
+.info-panel {
+  border: 1px solid var(--bdr); background: var(--pan);
+  border-radius: 7px; padding: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+}
+.info-panel.why {
+  border-color: rgba(75,135,168,.32);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 28px rgba(75,135,168,.06);
+}
+
+.section-title {
+  font-family: var(--cond); font-size: 13px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .2em; color: var(--ch-mid);
+  margin-bottom: 13px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--bdr);
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title::before {
+  content: ''; width: 3px; height: 13px;
+  background: var(--st); border-radius: 2px; flex-shrink: 0;
+}
+
+.why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
+
+.why-card {
+  border: 1px solid var(--bdr); background: rgba(8,13,20,.8);
+  border-radius: 5px; padding: 13px;
+}
+.why-glyph {
+  font-family: var(--mono); color: var(--st);
+  font-size: 17px; margin-bottom: 7px;
+}
+.why-card h4 {
+  font-family: var(--cond); font-size: 16px;
+  text-transform: uppercase; letter-spacing: .05em;
+  color: var(--ch-hi); margin-bottom: 4px;
+}
+.why-card p { font-size: 12.5px; color: var(--tx-mid); line-height: 1.5; }
+
+/* ─── LEGEND ─────────────────────────────────────────────── */
+.legend-list { display: grid; gap: 9px; }
+.legend-item {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 10.5px;
+  text-transform: uppercase; letter-spacing: .07em; color: var(--tx-mid);
+}
+.ll { width: 30px; height: 2px; flex-shrink: 0; border-radius: 1px; }
+.ll.mat  { background: var(--tx); }
+.ll.flow { background: var(--st); box-shadow: 0 0 6px var(--st-glow); }
+.ll.ctrl { background: var(--ch-mid); }
+.ll.fb   { background: none; border-top: 2px dashed var(--or); }
+
+/* ─── OUTPUTS STRIP ──────────────────────────────────────── */
+.outputs-strip {
+  border: 1px solid var(--bdr); background: var(--pan);
+  border-radius: 7px; padding: 16px;
+  margin-top: 14px;
+}
+.out-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 9px; }
+
+.out-card {
+  border: 1px solid var(--bdr); background: rgba(8,13,20,.8);
+  border-radius: 5px; padding: 13px; position: relative; overflow: hidden;
+}
+.out-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--st), rgba(75,135,168,.2));
+}
+.out-glyph {
+  font-family: var(--mono); color: var(--st-hi);
+  font-size: 18px; margin-bottom: 7px;
+}
+.out-card h4 {
+  font-family: var(--cond); font-size: 17px;
+  text-transform: uppercase; letter-spacing: .04em;
+  color: var(--ch-hi); margin-bottom: 4px;
+}
+.out-card p { font-size: 12.5px; color: var(--tx-mid); }
+
+/* ─── SUBMISSION NOTE ────────────────────────────────────── */
+.sub-box {
+  margin-top: 14px;
+  border: 1px solid rgba(196,104,24,.28);
+  border-radius: 7px;
+  background: linear-gradient(135deg, rgba(196,104,24,.06), rgba(8,13,20,.92));
+  padding: 14px 18px;
+  display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center;
+}
+.sub-label {
+  font-family: var(--cond); font-size: 16px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--ch-hi);
+  white-space: nowrap;
+}
+.sub-box p { font-size: 13px; color: var(--tx-mid); line-height: 1.6; }
+.sub-box strong { color: var(--ch-hi); }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1020px) {
+  .flow-header { display: none; }
+  .pfd-layout { grid-template-columns: 1fr; border-radius: 8px; border-top: 1px solid var(--bdr); }
+  .col-panel { border-right: none; border-left: none; border-bottom: 1px solid var(--bdr); }
+  .col-panel:last-child { border-left: none; border-top: 1px solid var(--bdr); }
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .out-grid { grid-template-columns: 1fr 1fr; }
+  .bottom-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  body { padding: 14px 12px 36px; }
+  .pillars, .why-grid, .out-grid { grid-template-columns: 1fr; }
+  .sub-box { grid-template-columns: 1fr; }
+  .topbar { flex-direction: column; align-items: flex-start; }
+}
+
+@media print {
+  body { background: #fff; color: #111; padding: 18px; }
+  body::before { display: none; }
+  .hero, .col-panel, .process-panel, .info-panel, .outputs-strip, .sub-box
+  { background: #fff !important; box-shadow: none !important; border-color: #aaa !important; }
+  .hero-name, .step-title, .io-title, .nameplate-name, .ch-hi { color: #111 !important; }
+}
 </style>
 </head>
 <body>
-  <main class="page">
-    <div class="topline">
-      <div class="badge">Supplemental Application Artifact · Freeform</div>
-      <div class="status">ChemE · Process Development · Advanced Manufacturing</div>
+<main class="page">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-badge"><span class="dot"></span> Process Flow Diagram · Application Supplement · Freeform</div>
+  <div>ChemE · Process Development · Advanced Manufacturing</div>
+</div>
+
+<!-- HERO NAMEPLATE -->
+<section class="hero">
+  <div class="hero-name">Nathan Anderson</div>
+  <div class="hero-role">Georgia Tech · Chemical &amp; Biomolecular Engineering · Process Development</div>
+  <p class="hero-thesis">
+    ChemE background built around one core question: <strong>why does the process fail, and what physical variable proves improvement?</strong> From deposition physics in printed electronics to statistical DOE and metrology, the methodology is consistent — <strong>measure, model, control, iterate</strong> — and maps directly onto the challenge of scaling autonomous metal additive manufacturing.
+  </p>
+  <div class="pillars">
+    <div class="pillar"><div class="pillar-head">Sense</div><p>measure the physical system clearly</p></div>
+    <div class="pillar"><div class="pillar-head">Learn</div><p>separate mechanism from noise</p></div>
+    <div class="pillar"><div class="pillar-head">Control</div><p>define usable operating windows</p></div>
+    <div class="pillar"><div class="pillar-head">Scale</div><p>standardize and transfer to production</p></div>
+  </div>
+</section>
+
+<!-- VARIABLE STRIP -->
+<div class="var-strip">
+  <span class="var-strip-lbl">Key process variables:</span>
+  <span class="vtag"><span class="s">T</span> thermal fields</span>
+  <span class="vtag"><span class="s">P</span> pressure / force</span>
+  <span class="vtag"><span class="s">F</span> flow / flux</span>
+  <span class="vtag"><span class="s">C</span> composition</span>
+  <span class="vtag"><span class="s">σ</span> surface energy</span>
+  <span class="vtag fb"><span class="s">↺</span> feedback signal</span>
+</div>
+
+<!-- FLOW HEADER: shows left→center→right topology -->
+<div class="flow-header" aria-hidden="true">
+  <div class="fh-label">Feedstocks / Inputs</div>
+  <div class="fh-pipe">
+    <div class="pipe-line"></div>
+    <div class="pipe-arrow"></div>
+    <span class="stream-badge">Streams F1–F4</span>
+  </div>
+  <div class="fh-label" style="border-color: rgba(185,215,232,.5); color: var(--st-hi);">Process Train</div>
+  <div class="fh-pipe">
+    <div class="pipe-line"></div>
+    <div class="pipe-arrow"></div>
+    <span class="stream-badge">Streams S1–S4</span>
+  </div>
+  <div class="fh-label">Products / Outputs</div>
+</div>
+
+<!-- MAIN PFD GRID -->
+<section class="pfd-layout" aria-label="Process flow diagram">
+
+  <!-- ── INPUTS ─────────────────────────────────────────── -->
+  <aside class="col-panel inputs-col">
+    <div class="col-head">
+      <span class="col-head-title">Feedstocks / Inputs</span>
+      <span class="col-head-sub">F-series</span>
+    </div>
+    <div class="col-body">
+
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">F1</div>
+          <div class="io-title">ChemE Physics Base</div>
+          <ul class="io-list">
+            <li class="io-li">transport phenomena</li>
+            <li class="io-li">thermodynamics + fluids</li>
+            <li class="io-li">materials / process constraints</li>
+          </ul>
+          <div class="io-tag">feed to process train</div>
+        </div>
+      </div>
+
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">F2</div>
+          <div class="io-title">Printed Electronics Research</div>
+          <ul class="io-list">
+            <li class="io-li">Georgia Tech Filler Lab</li>
+            <li class="io-li">micromodular devices</li>
+            <li class="io-li">deposition physics</li>
+            <li class="io-li">substrate / interface effects</li>
+          </ul>
+          <div class="io-tag">mechanism awareness</div>
+        </div>
+      </div>
+
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">F3</div>
+          <div class="io-title">Metrology + Analysis</div>
+          <ul class="io-list">
+            <li class="io-li">Keyence microscopy</li>
+            <li class="io-li">image analysis pipeline</li>
+            <li class="io-li">Python / MATLAB / JMP</li>
+            <li class="io-li">DOE + repeatability logic</li>
+          </ul>
+          <div class="io-tag">measurement backbone</div>
+        </div>
+      </div>
+
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">F4</div>
+          <div class="io-title">Hardware Startup Mode</div>
+          <ul class="io-list">
+            <li class="io-li">hands-on troubleshooting</li>
+            <li class="io-li">ownership in ambiguity</li>
+            <li class="io-li">clear technical writeups</li>
+            <li class="io-li">fast learning cycles</li>
+          </ul>
+          <div class="io-tag">execution bias</div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ── CENTER: PROCESS TRAIN ──────────────────────────── -->
+  <section class="process-panel">
+    <div class="col-head">
+      <span class="col-head-title">Process Train</span>
+      <span class="col-head-sub">Closed-Loop</span>
     </div>
 
-    <section class="hero">
-      <h1>Nathan Anderson — Turning Physical Complexity into <span>Controlled Manufacturing Processes</span></h1>
-
-      <div class="subtitle">
-        <div class="chip accent">Georgia Tech ChemE</div>
-        <div class="chip">Metrology</div>
-        <div class="chip">Process Windows</div>
-        <div class="chip">Scale-Up Thinking</div>
-        <div class="chip">Hardware Startup Fit</div>
+    <div class="reactor-block">
+      <div class="nameplate">
+        <div class="nameplate-name">Nathan Anderson</div>
+        <div class="nameplate-sub">Georgia Tech · Chemical &amp; Biomolecular Engineering</div>
       </div>
-
-      <p class="hero-copy">
-        I am a Chemical &amp; Biomolecular Engineering student focused on process development, metrology, and advanced manufacturing. My research experience has trained me to turn messy physical behavior into <strong>measurable process windows</strong> — the same physics-first, iteration-heavy mindset needed to scale autonomous metal additive manufacturing.
-      </p>
-
-      <div class="fit-bar" aria-label="Freeform fit thesis">
-        <div class="fit-thesis">
-          <div class="eyebrow">Freeform fit thesis</div>
-          <p>I bring ChemE process thinking to systems where materials, sensors, controls, software, and manufacturing constraints must converge into repeatable production.</p>
-        </div>
-        <div class="fit-card">
-          <h3>Sense</h3>
-          <p>measure the physical system clearly</p>
-        </div>
-        <div class="fit-card">
-          <h3>Learn</h3>
-          <p>separate mechanism from noise</p>
-        </div>
-        <div class="fit-card">
-          <h3>Control</h3>
-          <p>define usable operating windows</p>
-        </div>
-        <div class="fit-card">
-          <h3>Scale</h3>
-          <p>standardize what works</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="variables">
-      <div><span>T</span> thermal fields</div>
-      <div><span>P</span> pressure / force</div>
-      <div><span>F</span> flow / flux</div>
-      <div><span>C</span> composition</div>
-      <div><span class="alert">↺</span> feedback loops</div>
     </div>
 
-    <section class="main-grid" aria-label="Process flow diagram">
-      <aside class="column left">
-        <div class="col-head">Feedstocks / Inputs <small>F-series</small></div>
+    <div class="steps-body">
 
-        <div class="io-block">
-          <div class="num">F1</div>
-          <h4>ChemE Physics Base</h4>
-          <ul>
-            <li>transport phenomena</li>
-            <li>thermodynamics + fluids</li>
-            <li>materials/process constraints</li>
+      <div class="process-step">
+        <div class="step-head">
+          <span class="step-num">01</span>
+          <span class="step-title">Define Physical Failure Mode</span>
+        </div>
+        <p class="step-desc">What is failing? Where does variance enter? What measurable outcome proves improvement?</p>
+      </div>
+
+      <div class="flow-arrow">
+        <div class="fa-line"></div>
+        <div class="fa-label">define → design</div>
+        <div class="fa-head"></div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-head">
+          <span class="step-num">02</span>
+          <span class="step-title">Design Controlled Experiments</span>
+        </div>
+        <p class="step-desc">DOE · controls · variable isolation · risk · repeatability plan</p>
+      </div>
+
+      <div class="flow-arrow">
+        <div class="fa-line"></div>
+        <div class="fa-label">design → measure</div>
+        <div class="fa-head"></div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-head">
+          <span class="step-num">03</span>
+          <span class="step-title">Instrument + Measure</span>
+        </div>
+        <p class="step-desc">Microscopy · calibration · QC · image/data pipeline · traceability</p>
+      </div>
+
+      <div class="flow-arrow">
+        <div class="fa-line"></div>
+        <div class="fa-label">measure → model</div>
+        <div class="fa-head"></div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-head">
+          <span class="step-num">04</span>
+          <span class="step-title">Model Process Window</span>
+        </div>
+        <p class="step-desc">Transport · materials response · statistics · mechanism vs. noise · operating limits</p>
+      </div>
+
+      <div class="flow-arrow">
+        <div class="fa-line"></div>
+        <div class="fa-label">model → scale</div>
+        <div class="fa-head"></div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-head">
+          <span class="step-num">05</span>
+          <span class="step-title">Iterate Toward Scale</span>
+        </div>
+        <p class="step-desc">Reduce variance · standardize · document · transfer lab insight into production constraints</p>
+      </div>
+
+      <!-- FEEDBACK LOOP -->
+      <div class="feedback-loop">
+        <span class="fb-icon">↺</span>
+        <span class="fb-text">
+          measurement <span class="sep">→</span>
+          model <span class="sep">→</span>
+          control <span class="sep">→</span>
+          repeat
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── OUTPUTS ────────────────────────────────────────── -->
+  <aside class="col-panel outputs-col">
+    <div class="col-head">
+      <span class="col-head-title">Products / Outputs</span>
+      <span class="col-head-sub">S-series</span>
+    </div>
+    <div class="col-body">
+
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">S1</div>
+          <div class="io-title">Controlled Process Windows</div>
+          <ul class="io-list">
+            <li class="io-li">qualitative behavior → measurable limits</li>
+            <li class="io-li">variance bounds defined</li>
           </ul>
-          <div class="flow-tag">Feed to process train →</div>
-        </div>
-
-        <div class="io-block">
-          <div class="num">F2</div>
-          <h4>Printed Electronics Research</h4>
-          <ul>
-            <li>Georgia Tech Filler Lab</li>
-            <li>micromodular devices</li>
-            <li>deposition physics</li>
-            <li>substrate/interface effects</li>
-          </ul>
-          <div class="flow-tag">Mechanism awareness →</div>
-        </div>
-
-        <div class="io-block">
-          <div class="num">F3</div>
-          <h4>Metrology + Analysis</h4>
-          <ul>
-            <li>Keyence microscopy</li>
-            <li>image analysis</li>
-            <li>Python / MATLAB / JMP</li>
-            <li>DOE + repeatability logic</li>
-          </ul>
-          <div class="flow-tag">Measurement backbone →</div>
-        </div>
-
-        <div class="io-block">
-          <div class="num">F4</div>
-          <h4>Hardware Startup Mode</h4>
-          <ul>
-            <li>hands-on troubleshooting</li>
-            <li>ownership in ambiguity</li>
-            <li>clear technical writeups</li>
-            <li>fast learning cycles</li>
-          </ul>
-          <div class="flow-tag">Execution bias →</div>
-        </div>
-      </aside>
-
-      <section class="center-col">
-        <div class="col-head">Process Train <small>closed-loop</small></div>
-
-        <div class="reactor-wrap">
-          <div class="reactor">
-            <h3>Nathan Anderson</h3>
-            <p>Georgia Tech · Chemical &amp; Biomolecular Engineering</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-head"><span class="step-num">01</span><h4>Define Physical Failure Mode</h4></div>
-          <p>What is failing? Where does variance enter? What measurable outcome proves improvement?</p>
-        </div>
-        <div class="step-arrow">↓</div>
-
-        <div class="process-step">
-          <div class="step-head"><span class="step-num">02</span><h4>Design Controlled Experiments</h4></div>
-          <p>DOE · controls · variable isolation · risk · repeatability plan</p>
-        </div>
-        <div class="step-arrow">↓</div>
-
-        <div class="process-step">
-          <div class="step-head"><span class="step-num">03</span><h4>Instrument + Measure</h4></div>
-          <p>Microscopy · calibration · QC · image/data pipeline · traceability</p>
-        </div>
-        <div class="step-arrow">↓</div>
-
-        <div class="process-step">
-          <div class="step-head"><span class="step-num">04</span><h4>Model Process Window</h4></div>
-          <p>Transport · materials response · statistics · mechanism vs. noise · operating limits</p>
-        </div>
-        <div class="step-arrow">↓</div>
-
-        <div class="process-step">
-          <div class="step-head"><span class="step-num">05</span><h4>Iterate Toward Scale</h4></div>
-          <p>Reduce variance · standardize · document · transfer lab insight into production constraints</p>
-        </div>
-
-        <div class="feedback-label">↺ measurement → model → control → repeat</div>
-      </section>
-
-      <aside class="column right">
-        <div class="col-head">Products / Outputs <small>S-series</small></div>
-
-        <div class="io-block">
-          <div class="num">S1</div>
-          <h4>Controlled Process Windows</h4>
-          <ul>
-            <li>convert qualitative behavior into measurable limits</li>
-          </ul>
-          <div class="flow-tag">← Stability output</div>
-        </div>
-
-        <div class="io-block">
-          <div class="num">S2</div>
-          <h4>Metrology-Backed Decisions</h4>
-          <ul>
-            <li>use data to separate mechanism, drift, and noise</li>
-          </ul>
-          <div class="flow-tag">← Evidence output</div>
-        </div>
-
-        <div class="io-block">
-          <div class="num">S3</div>
-          <h4>Repeatable Experiments</h4>
-          <ul>
-            <li>controls, calibration, documentation, and iteration</li>
-          </ul>
-          <div class="flow-tag">← Execution output</div>
-        </div>
-
-        <div class="io-block">
-          <div class="num">S4</div>
-          <h4>Scale-Up Mindset</h4>
-          <ul>
-            <li>connect lab observations to production constraints</li>
-          </ul>
-          <div class="flow-tag">← Manufacturing output</div>
-        </div>
-      </aside>
-    </section>
-
-    <section class="bottom-grid">
-      <div class="why-box">
-        <h2 class="section-title">Why This Matters to Freeform</h2>
-        <div class="why-grid">
-          <div class="why-item">
-            <div class="why-icon">⬡</div>
-            <h4>Physical Complexity</h4>
-            <p>Thermal, fluid, material, and interfacial phenomena are ChemE-native systems — and they matter when manufacturing quality depends on controlled physics.</p>
-          </div>
-          <div class="why-item">
-            <div class="why-icon">↺</div>
-            <h4>Closed-Loop Iteration</h4>
-            <p>I am trained to close the loop between measurement and process improvement, not just run isolated experiments.</p>
-          </div>
-          <div class="why-item">
-            <div class="why-icon">▦</div>
-            <h4>Production Translation</h4>
-            <p>The goal is not a pretty lab result; the goal is a process that can be measured, repeated, improved, and scaled.</p>
-          </div>
+          <div class="io-tag">stability output</div>
         </div>
       </div>
 
-      <div class="legend-box">
-        <h2 class="section-title">Legend</h2>
-        <div class="legend-items">
-          <div class="legend-item"><div class="legend-line solid"></div><span>physical/material flow</span></div>
-          <div class="legend-item"><div class="legend-line dashed"></div><span>information flow</span></div>
-          <div class="legend-item"><div class="legend-line cyan"></div><span>control signal</span></div>
-          <div class="legend-item"><div class="legend-line alert"></div><span>risk / failure mode</span></div>
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">S2</div>
+          <div class="io-title">Metrology-Backed Decisions</div>
+          <ul class="io-list">
+            <li class="io-li">data separates mechanism, drift, noise</li>
+            <li class="io-li">evidence-based process tuning</li>
+          </ul>
+          <div class="io-tag">evidence output</div>
         </div>
       </div>
-    </section>
 
-    <section class="outputs-strip">
-      <h2 class="section-title">Representative Outputs</h2>
-      <div class="outputs-row">
-        <div class="output-card">
-          <div class="output-icon">⊞</div>
-          <h4>Process Maps</h4>
-          <p>clear variables, constraints, and decision points</p>
-        </div>
-        <div class="output-card">
-          <div class="output-icon">⊕</div>
-          <h4>Microscopy Metrics</h4>
-          <p>image-based evidence for physical behavior</p>
-        </div>
-        <div class="output-card">
-          <div class="output-icon">∿</div>
-          <h4>Statistical Insight</h4>
-          <p>repeatability, variance, and mechanism checks</p>
-        </div>
-        <div class="output-card">
-          <div class="output-icon">≡</div>
-          <h4>Technical Writing</h4>
-          <p>documentation that turns experiments into decisions</p>
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">S3</div>
+          <div class="io-title">Repeatable Experiments</div>
+          <ul class="io-list">
+            <li class="io-li">controls, calibration, documentation</li>
+            <li class="io-li">iteration-ready run records</li>
+          </ul>
+          <div class="io-tag">execution output</div>
         </div>
       </div>
-    </section>
 
-    <section class="submission-box">
-      <h3>How to use this</h3>
-      <p><strong>Submit as an optional supplement, not a substitute for the written answers.</strong> In the application, frame it as a one-page process-flow map showing how your ChemE background, research experience, and metrology/process-development mindset map onto Freeform's manufacturing challenges.</p>
-    </section>
-  </main>
+      <div class="io-block">
+        <div class="io-inner">
+          <div class="io-num">S4</div>
+          <div class="io-title">Scale-Up Mindset</div>
+          <ul class="io-list">
+            <li class="io-li">lab observations → production constraints</li>
+            <li class="io-li">manufacturability thinking from day one</li>
+          </ul>
+          <div class="io-tag">manufacturing output</div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+</section><!-- /pfd-layout -->
+
+<!-- BOTTOM: WHY + LEGEND -->
+<div class="bottom-row">
+  <div class="info-panel why">
+    <h2 class="section-title">Why This Maps Onto Freeform</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-glyph">⬡</div>
+        <h4>Physical Complexity</h4>
+        <p>Thermal, fluid, materials, and interfacial phenomena are ChemE-native. They also govern part quality in autonomous metal additive — which needs process people, not just software people.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-glyph">↺</div>
+        <h4>Closed-Loop Iteration</h4>
+        <p>Trained to close the loop between measurement and process improvement — not produce isolated data points and file them away.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-glyph">▦</div>
+        <h4>Production Translation</h4>
+        <p>The goal is never a pretty lab result. The goal is a process that can be measured, repeated, improved, and eventually run without me in the loop.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-panel">
+    <h2 class="section-title">Legend</h2>
+    <div class="legend-list">
+      <div class="legend-item"><div class="ll mat"></div><span>material / physical flow</span></div>
+      <div class="legend-item"><div class="ll flow"></div><span>process information stream</span></div>
+      <div class="legend-item"><div class="ll ctrl"></div><span>control signal</span></div>
+      <div class="legend-item"><div class="ll fb"></div><span>feedback / recycle loop</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- REPRESENTATIVE OUTPUTS -->
+<section class="outputs-strip">
+  <h2 class="section-title">Representative Deliverables</h2>
+  <div class="out-grid">
+    <div class="out-card">
+      <div class="out-glyph">⊞</div>
+      <h4>Process Maps</h4>
+      <p>variables, constraints, and decision logic documented clearly</p>
+    </div>
+    <div class="out-card">
+      <div class="out-glyph">⊕</div>
+      <h4>Microscopy Metrics</h4>
+      <p>image-based quantitative evidence for physical behavior</p>
+    </div>
+    <div class="out-card">
+      <div class="out-glyph">∿</div>
+      <h4>Statistical Insight</h4>
+      <p>repeatability, variance decomposition, mechanism checks</p>
+    </div>
+    <div class="out-card">
+      <div class="out-glyph">≡</div>
+      <h4>Technical Writing</h4>
+      <p>documentation that turns experiments into actionable decisions</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<div class="sub-box">
+  <div class="sub-label">How to Use</div>
+  <p><strong>Submit as an optional supplement, not a substitute for written answers.</strong> Frame it as a one-page process-flow map showing how ChemE background, printed-electronics research, and metrology/process-development methodology map onto Freeform's manufacturing engineering challenges.</p>
+</div>
+
+</main>
 </body>
 </html>
